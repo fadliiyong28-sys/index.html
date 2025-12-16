@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISHE - Ifisheco Safe, Health & Environment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --safe: #27ae60;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--safe);
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .logo span {
+            color: var(--safe);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info i {
+            font-size: 24px;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .nav-item.active {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            width: 24px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 25px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--safe);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        /* Dashboard Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .icon-unsafe {
+            background-color: var(--danger);
+        }
+
+        .icon-action {
+            background-color: var(--warning);
+        }
+
+        .icon-accident {
+            background-color: var(--dark);
+        }
+
+        .icon-resolved {
+            background-color: var(--safe);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-header h3 {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Table Styles */
+        .reports-table {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-open {
+            background-color: #ffeaa7;
+            color: #d35400;
+        }
+
+        .status-progress {
+            background-color: #a29bfe;
+            color: #2d3436;
+        }
+
+        .status-resolved {
+            background-color: #55efc4;
+            color: #2d3436;
+        }
+
+        .type-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .type-unsafe-condition {
+            background-color: #fd79a8;
+            color: white;
+        }
+
+        .type-unsafe-action {
+            background-color: #fdcb6e;
+            color: white;
+        }
+
+        .type-accident {
+            background-color: #e17055;
+            color: white;
+        }
+
+        /* Login Page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--primary);
+        }
+
+        .login-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo h1 {
+            color: var(--primary);
+        }
+
+        .login-logo span {
+            color: var(--safe);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+            
+            .nav-menu {
+                display: flex;
+                justify-content: space-around;
+            }
+            
+            .nav-item {
+                flex-direction: column;
+                padding: 10px;
+                font-size: 12px;
+                text-align: center;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page (Default View) -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1><i class="fas fa-shield-alt"></i> ISHE <span>System</span></h1>
+                <p>Ifisheco Safe, Health & Environment</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="loginId">ID Karyawan</label>
+                <input type="text" id="loginId" class="form-control" placeholder="Masukkan ID karyawan">
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password">
+            </div>
+            
+            <div class="form-group">
+                <button class="btn btn-primary" style="width: 100%;" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #7f8c8d;">
+                <p>Sistem Pelaporan Keselamatan Kerja Pertambangan Nikel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden by Default) -->
+    <div id="appContainer" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>ISHE <span>System</span></h1>
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <div id="userName">Ahmad Safrudin</div>
+                        <div style="font-size: 12px;">Safety Officer</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <ul class="nav-menu">
+                    <li class="nav-item active" onclick="showPage('dashboard')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('reportForm')">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Buat Laporan</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('reportsList')">
+                        <i class="fas fa-list"></i>
+                        <span>Daftar Laporan</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('profile')">
+                        <i class="fas fa-user"></i>
+                        <span>Profil</span>
+                    </li>
+                    <li class="nav-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Keluar</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div id="dashboardPage" class="page-content">
+                    <div class="page-header">
+                        <h2><i class="fas fa-home"></i> Dashboard</h2>
+                        <button class="btn btn-primary" onclick="showPage('reportForm')">
+                            <i class="fas fa-plus"></i> Laporan Baru
+                        </button>
+                    </div>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon icon-unsafe">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>24</h3>
+                                <p>Kondisi Tidak Aman</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon icon-action">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>18</h3>
+                                <p>Tindakan Tidak Aman</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon icon-accident">
+                                <i class="fas fa-ambulance"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>5</h3>
+                                <p>Kecelakaan</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon icon-resolved">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>32</h3>
+                                <p>Laporan Terselesaikan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+                        <h3 style="margin-bottom: 15px; color: var(--primary);">Laporan Terbaru</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No. Laporan</th>
+                                    <th>Jenis</th>
+                                    <th>Lokasi</th>
+                                    <th>Waktu</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISHE-2023-045</td>
+                                    <td><span class="type-badge type-unsafe-condition">Kondisi Tidak Aman</span></td>
+                                    <td>Area Crusher</td>
+                                    <td>15 Okt 2023, 10:30</td>
+                                    <td><span class="status-badge status-open">Open</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-044</td>
+                                    <td><span class="type-badge type-accident">Kecelakaan</span></td>
+                                    <td>Loading Dock</td>
+                                    <td>14 Okt 2023, 14:15</td>
+                                    <td><span class="status-badge status-progress">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-043</td>
+                                    <td><span class="type-badge type-unsafe-action">Tindakan Tidak Aman</span></td>
+                                    <td>Workshop</td>
+                                    <td>13 Okt 2023, 08:45</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Report Form Page -->
+                <div id="reportFormPage" class="page-content" style="display: none;">
+                    <div class="page-header">
+                        <h2><i class="fas fa-plus-circle"></i> Buat Laporan Baru</h2>
+                        <button class="btn btn-primary" onclick="showPage('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-header">
+                            <h3>Form Pelaporan ISHE</h3>
+                            <p>Silakan lengkapi form berikut untuk melaporkan insiden keselamatan kerja</p>
+                        </div>
+                        
+                        <form id="reportForm" onsubmit="submitReport(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reporterName">Nama Pelapor *</label>
+                                    <input type="text" id="reporterName" class="form-control" value="Ahmad Safrudin" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reporterId">ID Karyawan *</label>
+                                    <input type="text" id="reporterId" class="form-control" value="NKL-2021-087" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reporterPosition">Jabatan *</label>
+                                    <input type="text" id="reporterPosition" class="form-control" value="Safety Officer" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reportDate">Tanggal Kejadian *</label>
+                                    <input type="datetime-local" id="reportDate" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Jenis Laporan *</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="unsafeCondition" name="reportType" value="unsafe_condition" checked>
+                                        <label for="unsafeCondition">Kondisi Tidak Aman</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="unsafeAction" name="reportType" value="unsafe_action">
+                                        <label for="unsafeAction">Tindakan Tidak Aman</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="accident" name="reportType" value="accident">
+                                        <label for="accident">Kecelakaan</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="location">Lokasi Kejadian *</label>
+                                <select id="location" class="form-control" required>
+                                    <option value="">Pilih lokasi</option>
+                                    <option value="area_tambang">Area Tambang Terbuka</option>
+                                    <option value="crusher">Area Crusher</option>
+                                    <option value="loading_dock">Loading Dock</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="kantor">Kantor Administrasi</option>
+                                    <option value="laboratorium">Laboratorium</option>
+                                    <option value="gudang">Gudang Material</option>
+                                    <option value="lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="locationDetail">Detail Lokasi (Opsional)</label>
+                                <input type="text" id="locationDetail" class="form-control" placeholder="Contoh: Dekat conveyor belt no. 3">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="incidentDescription">Deskripsi Kejadian *</label>
+                                <textarea id="incidentDescription" class="form-control" placeholder="Jelaskan kejadian secara lengkap dan jelas..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="immediateAction">Tindakan Segera yang Diambil (Opsional)</label>
+                                <textarea id="immediateAction" class="form-control" placeholder="Tindakan yang sudah dilakukan untuk menangani kejadian..."></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-warning" onclick="showPage('dashboard')">
+                                    <i class="fas fa-times"></i> Batal
+                                </button>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-paper-plane"></i> Kirim Laporan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Reports List Page -->
+                <div id="reportsListPage" class="page-content" style="display: none;">
+                    <div class="page-header">
+                        <h2><i class="fas fa-list"></i> Daftar Laporan</h2>
+                        <button class="btn btn-primary" onclick="showPage('reportForm')">
+                            <i class="fas fa-plus"></i> Laporan Baru
+                        </button>
+                    </div>
+                    
+                    <div class="reports-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No. Laporan</th>
+                                    <th>Jenis</th>
+                                    <th>Deskripsi</th>
+                                    <th>Lokasi</th>
+                                    <th>Pelapor</th>
+                                    <th>Waktu</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISHE-2023-045</td>
+                                    <td><span class="type-badge type-unsafe-condition">Kondisi Tidak Aman</span></td>
+                                    <td>Peralatan pelindung diri tidak tersedia di area kerja</td>
+                                    <td>Area Crusher</td>
+                                    <td>Ahmad Safrudin</td>
+                                    <td>15 Okt 2023, 10:30</td>
+                                    <td><span class="status-badge status-open">Open</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-044</td>
+                                    <td><span class="type-badge type-accident">Kecelakaan</span></td>
+                                    <td>Terkilir saat menaiki tangga basah</td>
+                                    <td>Loading Dock</td>
+                                    <td>Budi Santoso</td>
+                                    <td>14 Okt 2023, 14:15</td>
+                                    <td><span class="status-badge status-progress">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-043</td>
+                                    <td><span class="type-badge type-unsafe-action">Tindakan Tidak Aman</span></td>
+                                    <td>Tidak menggunakan helm safety di area konstruksi</td>
+                                    <td>Workshop</td>
+                                    <td>Siti Rahayu</td>
+                                    <td>13 Okt 2023, 08:45</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-042</td>
+                                    <td><span class="type-badge type-unsafe-condition">Kondisi Tidak Aman</span></td>
+                                    <td>Permukaan jalan tambang berlubang dan berbahaya</td>
+                                    <td>Area Tambang Terbuka</td>
+                                    <td>Joko Wijaya</td>
+                                    <td>12 Okt 2023, 16:20</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-041</td>
+                                    <td><span class="type-badge type-accident">Kecelakaan</span></td>
+                                    <td>Tertimpa material jatuh dari ketinggian</td>
+                                    <td>Gudang Material</td>
+                                    <td>Rina Melati</td>
+                                    <td>10 Okt 2023, 11:10</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Profile Page -->
+                <div id="profilePage" class="page-content" style="display: none;">
+                    <div class="page-header">
+                        <h2><i class="fas fa-user"></i> Profil Pengguna</h2>
+                        <button class="btn btn-primary" onclick="showPage('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-header">
+                            <h3>Informasi Pribadi</h3>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileName">Nama Lengkap</label>
+                                <input type="text" id="profileName" class="form-control" value="Ahmad Safrudin">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profileId">ID Karyawan</label>
+                                <input type="text" id="profileId" class="form-control" value="NKL-2021-087" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profilePosition">Jabatan</label>
+                                <input type="text" id="profilePosition" class="form-control" value="Safety Officer">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profileDepartment">Departemen</label>
+                                <input type="text" id="profileDepartment" class="form-control" value="Health, Safety & Environment">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileEmail">Email</label>
+                                <input type="email" id="profileEmail" class="form-control" value="ahmad.safrudin@ifisheco.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profilePhone">No. Telepon</label>
+                                <input type="text" id="profilePhone" class="form-control" value="0812-3456-7890">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileJoinDate">Tanggal Bergabung</label>
+                            <input type="text" id="profileJoinDate" class="form-control" value="15 Maret 2021" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Statistik Laporan</label>
+                            <div style="display: flex; gap: 20px; margin-top: 10px;">
+                                <div style="text-align: center; padding: 15px; background-color: #f8f9fa; border-radius: 5px; flex: 1;">
+                                    <div style="font-size: 24px; font-weight: 600; color: var(--danger);">12</div>
+                                    <div style="font-size: 14px; color: var(--gray);">Laporan Dibuat</div>
+                                </div>
+                                <div style="text-align: center; padding: 15px; background-color: #f8f9fa; border-radius: 5px; flex: 1;">
+                                    <div style="font-size: 24px; font-weight: 600; color: var(--safe);">8</div>
+                                    <div style="font-size: 14px; color: var(--gray);">Laporan Selesai</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-success">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 ISHE System - Ifisheco Safe, Health & Environment. Semua hak dilindungi.</p>
+                <p>Sistem Pelaporan Keselamatan Kerja Pertambangan Nikel</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set current date and time for report form
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset() * 60000;
+            const localISOTime = new Date(now - timezoneOffset).toISOString().slice(0, 16);
+            document.getElementById('reportDate').value = localISOTime;
+        });
+
+        // Login function
+        function login() {
+            const loginId = document.getElementById('loginId').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (loginId && password) {
+                // Hide login page, show app
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'block';
+                
+                // Set user name based on ID (in a real app, this would come from backend)
+                if (loginId === 'NKL-2021-087') {
+                    document.getElementById('userName').textContent = 'Ahmad Safrudin';
+                } else {
+                    document.getElementById('userName').textContent = 'Karyawan ' + loginId;
+                }
+            } else {
+                alert('Harap masukkan ID karyawan dan password');
+            }
+        }
+
+        // Logout function
+        function logout() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+            
+            // Clear login fields
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPassword').value = '';
+            
+            // Show dashboard on next login
+            showPage('dashboard');
+        }
+
+        // Show different pages
+        function showPage(pageName) {
+            // Hide all pages
+            document.getElementById('dashboardPage').style.display = 'none';
+            document.getElementById('reportFormPage').style.display = 'none';
+            document.getElementById('reportsListPage').style.display = 'none';
+            document.getElementById('profilePage').style.display = 'none';
+            
+            // Show selected page
+            document.getElementById(pageName + 'Page').style.display = 'block';
+            
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Set active based on page
+            if (pageName === 'dashboard') {
+                navItems[0].classList.add('active');
+            } else if (pageName === 'reportForm') {
+                navItems[1].classList.add('active');
+            } else if (pageName === 'reportsList') {
+                navItems[2].classList.add('active');
+            } else if (pageName === 'profile') {
+                navItems[3].classList.add('active');
+            }
+        }
+
+        // Submit report form
+        function submitReport(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const reportType = document.querySelector('input[name="reportType"]:checked').value;
+            const location = document.getElementById('location').value;
+            const description = document.getElementById('incidentDescription').value;
+            
+            // In a real app, this would send data to a backend
+            alert('Laporan berhasil dikirim! Laporan akan segera ditindaklanjuti oleh tim HSE.');
+            
+            // Reset form and go to dashboard
+            document.getElementById('reportForm').reset();
+            
+            // Set current date and time again
+            const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset() * 60000;
+            const localISOTime = new Date(now - timezoneOffset).toISOString().slice(0, 16);
+            document.getElementById('reportDate').value = localISOTime;
+            
+            showPage('dashboard');
+        }
+    </script>
+</body>
+</html>
