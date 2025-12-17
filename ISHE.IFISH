@@ -1,0 +1,383 @@
+<!-- Simpan file ini dengan nama: ishe_system.html -->
+<!-- Kemudian buka file tersebut di browser -->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISHE - Ifisheco Safe, Health & Environment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root {
+            --primary: #2c3e50; --secondary: #3498db; --danger: #e74c3c; --warning: #f39c12;
+            --safe: #27ae60; --light: #ecf0f1; --dark: #2c3e50; --gray: #7f8c8d;
+        }
+        body { background-color: #f5f7fa; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        
+        /* Header */
+        header { background-color: var(--primary); color: white; padding: 15px 0; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo i { font-size: 28px; color: var(--safe); }
+        .logo h1 { font-size: 22px; }
+        .logo span { color: var(--safe); }
+        
+        /* Main Layout */
+        .main-content { display: flex; min-height: calc(100vh - 140px); }
+        .sidebar { width: 250px; background-color: white; padding: 20px 0; }
+        .content { flex: 1; padding: 25px; }
+        
+        /* Navigation */
+        .nav-menu { list-style: none; }
+        .nav-item { padding: 15px 25px; display: flex; align-items: center; gap: 12px; 
+                   cursor: pointer; transition: all 0.3s; border-left: 4px solid transparent; }
+        .nav-item:hover { background-color: #f8f9fa; }
+        .nav-item.active { background-color: #e8f4fc; border-left: 4px solid var(--secondary); 
+                          color: var(--secondary); }
+        
+        /* Buttons */
+        .btn { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; 
+               font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background-color: var(--secondary); color: white; }
+        
+        /* Form */
+        .form-container { background-color: white; border-radius: 8px; padding: 30px; 
+                         box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 20px; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; 
+                       border-radius: 5px; font-size: 16px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        /* Login Page */
+        .login-container { display: flex; justify-content: center; align-items: center; 
+                          min-height: 100vh; background-color: var(--primary); }
+        .login-box { background-color: white; border-radius: 10px; padding: 40px; 
+                    width: 100%; max-width: 450px; }
+        
+        /* Table */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        thead { background-color: var(--primary); color: white; }
+        
+        /* Status Badges */
+        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; }
+        .status-open { background-color: #ffeaa7; color: #d35400; }
+        .status-resolved { background-color: #55efc4; color: #2d3436; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: var(--primary);"><i class="fas fa-shield-alt"></i> ISHE <span>System</span></h1>
+                <p>Ifisheco Safe, Health & Environment</p>
+                <p style="font-size: 14px; color: var(--gray); margin-top: 10px;">Pertambangan Nikel</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="loginId">ID Karyawan</label>
+                <input type="text" id="loginId" class="form-control" placeholder="Contoh: NKL-2021-087">
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="Masukkan password">
+            </div>
+            
+            <div class="form-group">
+                <button class="btn btn-primary" style="width: 100%;" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Login ke ISHE
+                </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #7f8c8d;">
+                <p><strong>Demo Login:</strong> Gunakan ID apapun dan password apapun</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer" style="display: none;">
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>ISHE <span>System</span></h1>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                    <div>
+                        <div id="userName">Safety Officer</div>
+                        <div style="font-size: 12px;">Pertambangan Nikel</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <ul class="nav-menu">
+                    <li class="nav-item active" onclick="showPage('dashboard')">
+                        <i class="fas fa-home"></i><span>Dashboard</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('reportForm')">
+                        <i class="fas fa-plus-circle"></i><span>Buat Laporan</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('reportsList')">
+                        <i class="fas fa-list"></i><span>Daftar Laporan</span>
+                    </li>
+                    <li class="nav-item" onclick="showPage('profile')">
+                        <i class="fas fa-user"></i><span>Profil</span>
+                    </li>
+                    <li class="nav-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <!-- Dashboard -->
+                <div id="dashboardPage">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2><i class="fas fa-home"></i> Dashboard ISHE</h2>
+                        <button class="btn btn-primary" onclick="showPage('reportForm')">
+                            <i class="fas fa-plus"></i> Laporan Baru
+                        </button>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                        <div style="background-color: white; border-radius: 8px; padding: 20px; display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; background-color: #e74c3c; border-radius: 8px; 
+                                      display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 28px;">24</h3>
+                                <p>Kondisi Tidak Aman</p>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: white; border-radius: 8px; padding: 20px; display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 60px; height: 60px; background-color: #f39c12; border-radius: 8px; 
+                                      display: flex; align-items: center; justify-content: center; font-size: 24px; color: white;">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 28px;">18</h3>
+                                <p>Tindakan Tidak Aman</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background-color: white; border-radius: 8px; padding: 20px;">
+                        <h3 style="margin-bottom: 15px; color: var(--primary);">Laporan Terbaru</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No. Laporan</th><th>Jenis</th><th>Lokasi</th><th>Waktu</th><th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISHE-2023-045</td>
+                                    <td><span style="padding: 5px 10px; border-radius: 20px; background-color: #fd79a8; color: white; font-size: 12px;">Kondisi Tidak Aman</span></td>
+                                    <td>Area Crusher</td>
+                                    <td>15 Okt 2023</td>
+                                    <td><span class="status-badge status-open">Open</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISHE-2023-044</td>
+                                    <td><span style="padding: 5px 10px; border-radius: 20px; background-color: #e17055; color: white; font-size: 12px;">Kecelakaan</span></td>
+                                    <td>Loading Dock</td>
+                                    <td>14 Okt 2023</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Report Form -->
+                <div id="reportFormPage" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2><i class="fas fa-plus-circle"></i> Buat Laporan Baru</h2>
+                        <button class="btn btn-primary" onclick="showPage('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                    
+                    <div class="form-container">
+                        <h3 style="margin-bottom: 10px;">Form Pelaporan Keselamatan Kerja</h3>
+                        <p style="color: var(--gray); margin-bottom: 25px;">Lengkapi form untuk melaporkan insiden</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Pelapor</label>
+                                <input type="text" class="form-control" value="Ahmad Safrudin">
+                            </div>
+                            <div class="form-group">
+                                <label>ID Karyawan</label>
+                                <input type="text" class="form-control" value="NKL-2021-087">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Jenis Laporan</label><br>
+                            <div style="display: flex; gap: 20px; margin-top: 10px;">
+                                <label><input type="radio" name="type" checked> Kondisi Tidak Aman</label>
+                                <label><input type="radio" name="type"> Tindakan Tidak Aman</label>
+                                <label><input type="radio" name="type"> Kecelakaan</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tanggal Kejadian</label>
+                                <input type="datetime-local" class="form-control" id="incidentDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Lokasi</label>
+                                <select class="form-control">
+                                    <option>Area Tambang Terbuka</option>
+                                    <option>Area Crusher</option>
+                                    <option>Loading Dock</option>
+                                    <option>Workshop</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Deskripsi Kejadian</label>
+                            <textarea class="form-control" rows="4" placeholder="Jelaskan kejadian secara detail..."></textarea>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px;">
+                            <button type="button" class="btn btn-primary" onclick="alert('Laporan berhasil dikirim!'); showPage('dashboard');">
+                                <i class="fas fa-paper-plane"></i> Kirim Laporan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports List -->
+                <div id="reportsListPage" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2><i class="fas fa-list"></i> Daftar Laporan</h2>
+                        <button class="btn btn-primary" onclick="showPage('reportForm')">
+                            <i class="fas fa-plus"></i> Buat Baru
+                        </button>
+                    </div>
+                    
+                    <div style="background-color: white; border-radius: 8px; overflow: hidden;">
+                        <table>
+                            <thead>
+                                <tr><th>No. Laporan</th><th>Jenis</th><th>Lokasi</th><th>Pelapor</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>ISHE-2023-045</td><td>Kondisi Tidak Aman</td><td>Area Crusher</td><td>Ahmad</td><td><span class="status-open status-badge">Open</span></td></tr>
+                                <tr><td>ISHE-2023-044</td><td>Kecelakaan</td><td>Loading Dock</td><td>Budi</td><td><span class="status-resolved status-badge">Resolved</span></td></tr>
+                                <tr><td>ISHE-2023-043</td><td>Tindakan Tidak Aman</td><td>Workshop</td><td>Siti</td><td><span class="status-resolved status-badge">Resolved</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <div id="profilePage" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2><i class="fas fa-user"></i> Profil Pengguna</h2>
+                        <button class="btn btn-primary" onclick="showPage('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                    
+                    <div class="form-container">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Lengkap</label>
+                                <input type="text" class="form-control" value="Ahmad Safrudin">
+                            </div>
+                            <div class="form-group">
+                                <label>Jabatan</label>
+                                <input type="text" class="form-control" value="Safety Officer">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Departemen</label>
+                                <input type="text" class="form-control" value="Health, Safety & Environment">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Bergabung</label>
+                                <input type="text" class="form-control" value="15 Maret 2021">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 20px; color: var(--gray); font-size: 14px; border-top: 1px solid #eee;">
+            <p>&copy; 2023 ISHE System - Ifisheco Safe, Health & Environment</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set default date
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const localISOTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById('incidentDate').value = localISOTime;
+        });
+
+        // Login function
+        function login() {
+            const loginId = document.getElementById('loginId').value;
+            if (loginId) {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'block';
+                document.getElementById('userName').textContent = loginId;
+            } else {
+                alert('Masukkan ID Karyawan');
+            }
+        }
+
+        // Logout function
+        function logout() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPassword').value = '';
+            showPage('dashboard');
+        }
+
+        // Show pages
+        function showPage(page) {
+            ['dashboardPage', 'reportFormPage', 'reportsListPage', 'profilePage'].forEach(p => {
+                document.getElementById(p).style.display = 'none';
+            });
+            document.getElementById(page + 'Page').style.display = 'block';
+            
+            // Update active nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (page === 'dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
+            if (page === 'reportForm') document.querySelectorAll('.nav-item')[1].classList.add('active');
+            if (page === 'reportsList') document.querySelectorAll('.nav-item')[2].classList.add('active');
+            if (page === 'profile') document.querySelectorAll('.nav-item')[3].classList.add('active');
+        }
+    </script>
+</body>
+</html>
